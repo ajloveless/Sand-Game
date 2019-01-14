@@ -18,7 +18,7 @@ public class GuiHandler
    output = ""+
    "FPS: " + (engine.frames + 1) / (engine.runTime + 1) + spacing +
    "CURSOR SIZE: " + (engine.cursorSize) + spacing +
-   "ELEMENT: " + (engine.elements[engine.scroll].name);
+   "ELEMENT: " + "hmmm";
 
    if (engine.fps == engine.paused) output += spacing + "PAUSED";
    return output;

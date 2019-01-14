@@ -1,11 +1,11 @@
 package Elements;
 
-public class Sand extends Element
+public class Dirt extends Element
 {
-	public Sand()
+	public Dirt()
 	{
 		//Id, Name, Tooltip, Type, Color, Density
-		super((byte)1,"Sand","Piles up in nice dunes",(byte)3,0xC2B280,1);
+		super((byte)2,"Dirt","Makes good mountains",(byte)3,0x8B4513,1);
 
 
 	}

@@ -7,6 +7,7 @@ import java.lang.Thread; // import threads
 import javax.swing.JFrame; //Display a JFrame
 import java.awt.event.MouseEvent;
 import java.util.Arrays; 
+import Elements.*;
 
 //The Engine class needs to have JFrame methods and the Runnable run() method
 public class Engine extends JFrame implements Runnable
@@ -19,7 +20,7 @@ public static int width = 800; //Width of the window
 public static int height = 800; //Height of the window
 public static int alpha = 0xFFFF00DC; //Defined alpha color
 public static Color textColor = new Color(0xffffff); //Color of debug text
-public  Element[] grid = new Element[width * height]; //Array for each screen pixel
+//public  Element[] grid = new Element[width * height]; //Array for each screen pixel
 private boolean[] changedCells = new boolean[width*height]; //Array for each pixel for whether or not it was changed on the current frame
 
 public int frames = 0; //How many frames have been rendered
@@ -33,28 +34,42 @@ int cursorSize;
 private Canvas canvas = new Canvas(); 
 
 //Air is it's own special category, at least until gasses are added
-public Element air = new Element("Air",3,0x000000,0.0);
+// public Element air = new Element("Air",3,0x000000,0.0);
 
-//Powders
-public Element sand = new Element("Sand",1,0xc2b280 ,1.0);
-public Element dirt = new Element("Dirt",1,0x8B4513,1.0);
-public Element snow = new Element("Snow",1,0xe7e7e7,1.0);
-public Element seed = new Element("Seed",1,0x368505,1.0);
+// //Powders
+// public Element sand = new Element("Sand",1,0xc2b280 ,1.0);
+// public Element dirt = new Element("Dirt",1,0x8B4513,1.0);
+// public Element snow = new Element("Snow",1,0xe7e7e7,1.0);
+// public Element seed = new Element("Seed",1,0x368505,1.0);
 
-//Solids
-public Element stone = new Element("Stone",0,0x808080,2.0);
-public Element wood = new Element("Wood",0,0x855e42,2.0);
-public Element ice = new Element("Ice",0,0xadd8e6,2.0);
-public Element plant = new Element("Plant",0,0x43921b ,1.0);
-public Element spout = new Element("Spout",0,0xffd700 ,1.0);
+// //Solids
+// public Element stone = new Element("Stone",0,0x808080,2.0);
+// public Element wood = new Element("Wood",0,0x855e42,2.0);
+// public Element ice = new Element("Ice",0,0xadd8e6,2.0);
+// public Element plant = new Element("Plant",0,0x43921b ,1.0);
+// public Element spout = new Element("Spout",0,0xffd700 ,1.0);
 
-//Liquids
-public Element water = new Element("Water",2,0x0000ff,0.5);
-public Element oil = new Element("Oil",2,0x2c2416,0.4);
-public Element acid = new Element("Acid",2,0xD0FB3C,0.6);
+// //Liquids
+// public Element water = new Element("Water",2,0x0000ff,0.5);
+// public Element oil = new Element("Oil",2,0x2c2416,0.4);
+// public Element acid = new Element("Acid",2,0xD0FB3C,0.6);
 
 
-public Element[] elements = {air, sand, dirt, snow, seed, stone, wood, ice, plant, spout, water, oil, acid};
+public Elements.Sand sand = new Elements.Sand();
+public Elements.Dirt dirt = new Elements.Dirt();
+public Elements.Snow snow = new Elements.Snow();
+public Elements.Seed seed = new Elements.Seed();
+public Elements.Stone stone = new Elements.Stone();
+public Elements.Wood wood= new Elements.Wood();
+public Elements.Ice ice = new Elements.Ice();
+public Elements.Plant plant = new Elements.Plant();
+public Elements.Spout spout = new Elements.Spout();
+public Elements.Water water = new Elements.Water();
+public Elements.Oil oil = new Elements.Oil();
+public Elements.Acid acid = new Elements.Acid();
+
+
+//public Element[] elements = {air, sand, dirt, snow, seed, stone, wood, ice, plant, spout, water, oil, acid};
 public int scroll = 1; //Which element will be selected, starts at 1 so that air is never selected
 
 //Define handler objects
@@ -67,13 +82,13 @@ private GuiHandler gui = new GuiHandler(this);
 //Default engine constructor
 public Engine()
 {
+ System.out.println("Water's tooltip: " + water.tooltip); //Proof of concept
  runTime = 0; //How long in seconds the game has been running
  debug = true; //If debug mode is on
  cursorSize = 10; //Size of the cursor in pixels
  realtime = 60; //What the realtime tick speed should be
  paused = 0; //What the tick speed should be when the game is paused
  fps = realtime; //Start the game unpaused
-
  //Make the application terminate when it's closed
  setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  //Set temporary position and size of the frame
@@ -97,7 +112,7 @@ public Engine()
  canvas.addMouseMotionListener(mouse); //Mouse movement
  canvas.addMouseWheelListener(mouse); //Mouse wheel
 
- Arrays.fill(grid, air); //Start the game empty
+ //Arrays.fill(grid, air); //Start the game empty
 }
 
  //Update any game logic logic
@@ -117,200 +132,11 @@ public void update()
    this.runTime += 1;
   }
 
-  //Reset the changed cells array each frame, so that the frame starts with no changed cells
-  Arrays.fill(changedCells, false);
-
-  //Check each pixel from the bottom up (going bottom to top because of gravity)
-  for (int i = grid.length - 1; i>0; i--)
-  {
-    //Make sure the cell wont fall off screen and create an out of bounds error
-    if (i + width < grid.length - 1){
-      //Only change a cell if it hasn't already been changed this frame, keeps chains of things from happening all at once
-      if (!changedCells[i]) {
-
-    //Based on the type of element it is
-    switch(grid[i].type)
-    {
-
-      case 0: //Solid
-
-      //Element specific: Ice
-      //Behavior: Turns water to ice
-      if (grid[i].name == "Ice")
-      {
-        //Loop through neighbors and freeze them if they're water or snow
-        for(int xx=-1;xx<=1;xx++)
-          for(int yy=-1;yy<=1;yy++)
-            if (grid[ i + (width*yy) + xx].name == "Water" || grid[ i + (width*yy) + xx].name == "Snow")
-              if (Math.random() > 0.99) //One percent of the time
-                grid[ i + (width*yy) + xx] = grid[i];
-      }
-
-      //Element specific: Plant
-      //Behavior: Grows in contact with water, dies from overcrowding of plants
-      if (grid[i].name == "Plant")
-      {
-        int plantCount = -1; //number of plant neighbors it has, Offset by -1 because the cell itself is counted as a neighbor
-
-        //Look at neighbors for water, absorb water to grow plant
-        for(int xx=-1;xx<=1;xx++)
-          for(int yy=-1;yy<=1;yy++)
-          {
-            if (grid[ i + (width*yy) + xx].name == "Water")
-            {
-                grid[ i + (width*yy) + xx] = grid[i];
-                changedCells[ i + (width*yy) + xx] = true;
-            }
-            if (grid[ i + (width*yy) + xx].name == "Plant")
-            {
-              plantCount++;
-            }
-          } 
-          //If the cell has too many or too few neighbors it dies
-          if (plantCount > 4 || plantCount < 1)
-            grid[i] = air;
-      }
-
-      //Element specific: Sprout
-      //Behavior: If the cell under the spout is air, there is a ten percent chance each frame to spawn water
-      if (grid[i].name == "Spout")
-      {
-        if (grid[i + width] == air)
-        if (Math.random() > 0.90)
-        grid[i + width] = water;
-      }
-
-
-      break; //End of solids
-
-      case 1: //Powder
-
-      //50% of the time, The powder will go straight down
-      //The rest of the time, it will go either down and left or down and right
-      if (Math.random() > 0.50)
-      {
-        if (Math.random() > 0.50) offset = -1;
-            else offset = 1;
-        }   else offset = 0;
-
-
-        //If the cell below (plus the offset of left or right) is less dense than the cell
-        if (grid[i].density > grid[i + width + offset].density)
-        {
-          //The elements switch places
-          Element swap = grid[i + width + offset];
-          grid[i + width + offset] = grid[i];
-          grid[i] = swap;
-          changedCells[i] = true;
-          changedCells[i + width + offset] = true;
-        } else 
-        //Does the same thing, but checks the opposite side
-        if (grid[i].density > grid[i + width - offset].density)
-        {
-          Element swap = grid[i + width - offset];
-          grid[i + width - offset] = grid[i];
-          grid[i] = swap;
-          changedCells[i] = true;
-          changedCells[i + width - offset] = true;
-        } 
-
-      //Element specific: Snow
-      //Behavior: If snow touches water, it turns into ice
-      if (grid[i].name == "Snow")
-      {
-        for(int xx=-1;xx<=1;xx++)
-          for(int yy=-1;yy<=1;yy++)
-            if (grid[ i + (width*yy) + xx].name == "Water")
-                grid[i] = ice;
-      }
-
-      //Element specific: Seed
-      //Behavior: If seed touches water, it turns into plant
-      if (grid[i].name == "Seed")
-      {
-        for(int xx=-1;xx<=1;xx++)
-          for(int yy=-1;yy<=1;yy++)
-            if (grid[ i + (width*yy) + xx].name == "Water")
-                grid[i] = plant;
-      }
-       
-      break; //End of powders
-
-      case 2: //Liquid
-
-        //Every frame either choose left or right, never down
-        //Makes the water spread out more
-        if (Math.random() > 0.50) offset = -1;
-        else offset = 1;
-
-        //Liquid is really broken, needs to be redone
-
-        //Check down and left or down and right
-        if (grid[i].density > grid[i + width + offset].density)
-        {
-          Element swap = grid[i + width + offset];
-          grid[i + width + offset] = grid[i];
-          grid[i] = swap;
-          changedCells[i] = true;
-          changedCells[i + width + offset] = true;
-        } 
-        //Checks the other direction
-        if (grid[i].density > grid[i + width - offset].density)
-        {
-          Element swap = grid[i + width - offset];
-          grid[i + width - offset] = grid[i];
-          grid[i] = swap;
-          changedCells[i] = true;
-          changedCells[i + width - offset] = true;
-        }
-        //Also check left or right
-        if (grid[i].density > grid[i + offset].density)
-        {
-          Element swap = grid[i + offset];
-          grid[i + offset] = grid[i];
-          grid[i] = swap;
-          changedCells[i] = true;
-          changedCells[i + offset] = true;
-        }
-        //Then check the other direction
-        if (grid[i].density > grid[i - offset].density)
-        {
-          Element swap = grid[i- offset];
-          grid[i - offset] = grid[i];
-          grid[i] = swap;
-          changedCells[i] = true;
-          changedCells[i- offset] = true;
-        } 
-
-      //Element specific: Acid
-      //Behavior: Destroys any cell it touches, evaporates in the process
-      if (grid[i].name == "Acid")
-      {
-        for(int xx=-1;xx<=1;xx++)
-          for(int yy=-1;yy<=1;yy++)
-          {
-            if (grid[ i + (width*yy) + xx].name != "Air")
-              grid[ i + (width*yy) + xx] = air;
-              grid[i] = air;
-              changedCells[i] = true;
-              changedCells[ i + (width*yy) + xx] = true;
-          }
-      }
-      break;
-
-      case 3: //Air
-      //Nothing yet
-      break;
-
-      //spaghetti brackets
-    }
+  
   }
-    }
+}
     
-}
 
- }
-}
 
 
  //Render visuals
@@ -328,8 +154,8 @@ public void render()
    graphics.setColor(textColor);
    graphics.drawString(gui.updateGUI(),0,10);
   }
-  for (int i=0; i < grid.length; i++)
-  renderer.setPixel(grid[i].color, i % width, (i -(i % width))/width);
+  // for (int i=0; i < grid.length; i++)
+  // renderer.setPixel(grid[i].color, i % width, (i -(i % width))/width);
   //Show the buffers
   bufferStrategy.show();
 }
@@ -338,7 +164,7 @@ public void render()
 public void leftClick(int x, int y)
  {
   //Spawn currently selected element at mouse
-  particle(elements[scroll],cursorSize,x,y);
+  //particle(elements[scroll],cursorSize,x,y);
   
  }
 
@@ -346,7 +172,7 @@ public void leftClick(int x, int y)
 public void rightClick(int x, int y)
  {
   //Destroy element at mouse
-  particle(air,cursorSize,x,y);
+  //particle(air,cursorSize,x,y);
   
  }
 
@@ -395,13 +221,13 @@ public void rightClick(int x, int y)
  //Spawn particles in a square around the xx and yy position
  public void particle(Element e, int size, int xx, int yy)
  {
-  int o = size/2;
-  for(int w=xx;w<xx +size;w++)
-   for (int h=yy;h<yy+size;h++)
-   { 
-    if (e == air || grid[((w-o) + (h-o) * width)] == air)
-    grid[((w-o) + (h-o) * width)] = e;
-   }
+  // int o = size/2;
+  // for(int w=xx;w<xx +size;w++)
+  //  for (int h=yy;h<yy+size;h++)
+  //  { 
+  //   if (e == air || grid[((w-o) + (h-o) * width)] == air)
+  //   grid[((w-o) + (h-o) * width)] = e;
+  //  }
  }
 
  //Executed once per key press, doesn't do anything for when keys are held down

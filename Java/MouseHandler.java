@@ -79,7 +79,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
         engine.scroll -= notches;
         //Keep in bounds
         if (engine.scroll < 1) engine.scroll = 1;
-        if (engine.scroll > engine.elements.length-1) engine.scroll = engine.elements.length-1;
+        if (engine.scroll > 404) engine.scroll = 404;
 
     }
 }
