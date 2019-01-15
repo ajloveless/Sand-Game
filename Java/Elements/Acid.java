@@ -13,6 +13,7 @@ public class Acid extends Element
 	@Override
 	public void interaction()
 	{
+
 	}
 	
 }

@@ -13,6 +13,19 @@ public class Ice extends Element
 	@Override
 	public void interaction()
 	{
+		for(int xx=-1;xx<=1;xx++)
+		{
+			for (int yy = -1; yy <= 1; yy++)
+			{
+				if (grid[i + (width * yy) + xx].name == "Water" || grid[i + (width * yy) + xx].name == "Snow")
+				{
+					if (Math.random() > 0.99) //One percent of the time
+					{
+						grid[i + (width * yy) + xx] = grid[i];
+					}
+				}
+			}
+		}
 	}
 	
 }
