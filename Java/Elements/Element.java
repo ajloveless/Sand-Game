@@ -2,13 +2,6 @@ package Elements;
 
 public abstract class Element
 {
-	// String name = "Null";
-	// String tooltip = "You shouldn\'t be able to see this message";
-	// byte id = -1;
-	// byte type = -1;
-	// int color = 0x000000;
-	// double density = 0.0;
-
 	public final byte id;
 	public final String name;
 	public final String tooltip;
@@ -21,7 +14,7 @@ public abstract class Element
 	0 - Air
 	1 - Solid
 	2 - Liquid
-	3 -
+	3 - Powder
 	*/
 	public Element(byte id, String name, String tooltip, byte type, int color, double density)
 	{
@@ -43,6 +36,11 @@ public abstract class Element
 		System.out.println(type);
 		System.out.println(color);
 		System.out.println(density);
+	}
+
+	public void update()
+	{
+		
 	}
 
 	
