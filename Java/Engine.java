@@ -20,7 +20,7 @@ public static int width = 800; //Width of the window
 public static int height = 800; //Height of the window
 public static int alpha = 0xFFFF00DC; //Defined alpha color
 public static Color textColor = new Color(0xffffff); //Color of debug text
-//public  Element[] grid = new Element[width * height]; //Array for each screen pixel
+public  byte[] grid = new byte[width * height]; //Array for each screen pixel
 private boolean[] changedCells = new boolean[width*height]; //Array for each pixel for whether or not it was changed on the current frame
 
 public int frames = 0; //How many frames have been rendered
@@ -33,6 +33,7 @@ int cursorSize;
 //Create a canvas to engine on
 private Canvas canvas = new Canvas(); 
 
+public int elementNumber = 13;
 
 //In order of IDs
 public Elements.Air air = new Elements.Air(); 
@@ -48,9 +49,8 @@ public Elements.Spout spout = new Elements.Spout();
 public Elements.Water water = new Elements.Water();
 public Elements.Oil oil = new Elements.Oil();
 public Elements.Acid acid = new Elements.Acid();
+public Element[] elements = {air,sand,dirt,snow,seed,stone,wood,ice,plant,spout,water,oil,acid};//new Object[elementNumber];
 
-
-//public Element[] elements = {air, sand, dirt, snow, seed, stone, wood, ice, plant, spout, water, oil, acid};
 public int scroll = 1; //Which element will be selected, starts at 1 so that air is never selected
 
 //Define handler objects
@@ -63,7 +63,6 @@ private GuiHandler gui = new GuiHandler(this);
 //Default engine constructor
 public Engine()
 {
- System.out.println("Water's tooltip: " + water.tooltip); //Proof of concept
  runTime = 0; //How long in seconds the game has been running
  debug = true; //If debug mode is on
  cursorSize = 10; //Size of the cursor in pixels
@@ -93,7 +92,12 @@ public Engine()
  canvas.addMouseMotionListener(mouse); //Mouse movement
  canvas.addMouseWheelListener(mouse); //Mouse wheel
 
- //Arrays.fill(grid, air); //Start the game empty
+for(int i=0; i<elementNumber;i++)
+{
+  System.out.println(elements[i].name + ": " + elements[i].tooltip);
+}
+
+ Arrays.fill(grid, air.id); //Start the game empty
 }
 
  //Update any game logic logic
@@ -110,10 +114,41 @@ public void update()
   }
 
   
-  }
-}
-    
+  for (int i = grid.length - 1; i>0; i--)
+  {
+    //Make sure the cell wont fall off screen and create an out of bounds error
+    if (i + width < grid.length - 1){
+      //Only change a cell if it hasn't already been changed this frame, keeps chains of things from happening all at once
+      if (!changedCells[i]) {
+        int left = i - i;
+        int right = i + i;
+        int up = 
+        //Based on the type of element it is
+        switch(elements[grid[i]].type)
+        {
 
+          case 0:
+
+          break; 
+
+          case 1: 
+
+          break; 
+
+          case 2:
+
+          break;
+
+          case 3: 
+
+          break;
+
+        }
+      }
+    }
+  }
+} 
+}
 
 
  //Render visuals
@@ -229,7 +264,7 @@ public void rightClick(int x, int y)
       if (this.debug) this.debug = false;
       else this.debug = true;
       break;
-      
+
     //1-9 keys
     case 49: //1 key
     case 50: //2 key
