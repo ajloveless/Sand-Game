@@ -33,31 +33,12 @@ int cursorSize;
 //Create a canvas to engine on
 private Canvas canvas = new Canvas(); 
 
-//Air is it's own special category, at least until gasses are added
-// public Element air = new Element("Air",3,0x000000,0.0);
 
-// //Powders
-// public Element sand = new Element("Sand",1,0xc2b280 ,1.0);
-// public Element dirt = new Element("Dirt",1,0x8B4513,1.0);
-// public Element snow = new Element("Snow",1,0xe7e7e7,1.0);
-// public Element seed = new Element("Seed",1,0x368505,1.0);
-
-// //Solids
-// public Element stone = new Element("Stone",0,0x808080,2.0);
-// public Element wood = new Element("Wood",0,0x855e42,2.0);
-// public Element ice = new Element("Ice",0,0xadd8e6,2.0);
-// public Element plant = new Element("Plant",0,0x43921b ,1.0);
-// public Element spout = new Element("Spout",0,0xffd700 ,1.0);
-
-// //Liquids
-// public Element water = new Element("Water",2,0x0000ff,0.5);
-// public Element oil = new Element("Oil",2,0x2c2416,0.4);
-// public Element acid = new Element("Acid",2,0xD0FB3C,0.6);
-
-
-public Elements.Sand sand = new Elements.Sand();
-public Elements.Dirt dirt = new Elements.Dirt();
-public Elements.Snow snow = new Elements.Snow();
+//In order of IDs
+public Elements.Air air = new Elements.Air(); 
+public Elements.Sand sand = new Elements.Sand(); 
+public Elements.Dirt dirt = new Elements.Dirt(); 
+public Elements.Snow snow = new Elements.Snow(); 
 public Elements.Seed seed = new Elements.Seed();
 public Elements.Stone stone = new Elements.Stone();
 public Elements.Wood wood= new Elements.Wood();
@@ -119,10 +100,6 @@ public Engine()
 public void update()
  {   
    
-  //If the esc key is pressed, exit the game
-  if (keyboard.escape())  System.exit(0); 
-
-
   //Add 1 to runTime every second
   if (this.fps == this.realtime)
   {
@@ -235,17 +212,23 @@ public void rightClick(int x, int y)
  {
   switch(keyCode)
   {
-    //Tilde key
-    case 192:
-      if (this.debug) this.debug = false;
-      else this.debug = true;
-      break;
 
+    //Escape
+    case 27:
+       System.exit(0); 
+    break;
+      
     //Spacebar
     case 32:
       if (this.fps == this.realtime) this.fps = this.paused;
       else this.fps = this.realtime; 
     break;
+
+    //Tilde key
+    case 192:
+      if (this.debug) this.debug = false;
+      else this.debug = true;
+      break;
       
     //1-9 keys
     case 49: //1 key
