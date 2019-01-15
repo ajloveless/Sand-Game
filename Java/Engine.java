@@ -114,14 +114,41 @@ public void update()
   }
 
   
-for (int i = grid.length - 1; i>0; i--)
-      System.out.println(elements[grid[i]].name);
+  for (int i = grid.length - 1; i>0; i--)
+  {
+    //Make sure the cell wont fall off screen and create an out of bounds error
+    if (i + width < grid.length - 1){
+      //Only change a cell if it hasn't already been changed this frame, keeps chains of things from happening all at once
+      if (!changedCells[i]) {
+        int left = i - i;
+        int right = i + i;
+        int up = 
+        //Based on the type of element it is
+        switch(elements[grid[i]].type)
+        {
 
+          case 0:
 
+          break; 
+
+          case 1: 
+
+          break; 
+
+          case 2:
+
+          break;
+
+          case 3: 
+
+          break;
+
+        }
+      }
+    }
   }
+} 
 }
-    
-
 
 
  //Render visuals
