@@ -109,6 +109,7 @@ public void update()
 
   Arrays.fill(changedCells, false);
   for (int i = grid.length - 1; i>0; i--)
+
   {
     //Make sure the cell wont fall off screen and create an out of bounds error
     if (i + width < grid.length - 1){
@@ -134,23 +135,30 @@ public void update()
           break; 
 
           case 2: //Liquids
-
-          break;
-
-          case 3: //Powders
-            if (Math.random() > 0.50)
             if (Math.random() > 0.50)
             offset = -1;
             else offset = 1;
 
-            if(elements[grid[i]].density > elements[grid[down + offset]].density)
+              
+              if (swap(i,down+offset) == false)
+              swap(i,down - offset);
+
+              if (swap(i,i+offset) == false)
+              swap(i,i-offset);
+          
+              
+          break;
+
+          case 3: //Powders
+            if (Math.random() > 0.80)
             {
-              byte swap = grid[down + offset];
-              grid[down + offset] = grid[i];
-              grid[i] = swap;
-              changedCells[i] = true;
-              changedCells[down] = true;
-            }
+            if (Math.random() > 0.50)
+            offset = -1;
+            else offset = 1;
+          } else offset = 0;
+
+              swap(i,down+offset);
+
           break;
 
         }
@@ -160,6 +168,19 @@ public void update()
 } 
 }
 
+
+public boolean swap(int cell1, int cell2)
+{
+  if(elements[grid[cell1]].density > elements[grid[cell2]].density)
+  {
+    byte swap = grid[cell2];
+                grid[cell2] = grid[cell1];
+                grid[cell1] = swap;
+                changedCells[cell1] = true;
+                changedCells[cell2] = true;
+                return true;
+  } else return false;
+}
 
  //Render visuals
 public void render()
@@ -244,6 +265,7 @@ public void rightClick(int x, int y)
   for(int w=xx;w<xx +size;w++)
    for (int h=yy;h<yy+size;h++)
    { 
+    if(((w-o) + (h-o) * width) < grid.length)
     if (elements[e] == air || elements[grid[((w-o) + (h-o) * width)]] == air)
     grid[((w-o) + (h-o) * width)] = e;
    }
