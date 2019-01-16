@@ -1,6 +1,6 @@
 package Elements;
 
-public abstract class Element
+public class Element
 {
 	public final byte id;
 	public final String name;
@@ -26,7 +26,10 @@ public abstract class Element
 		this.density = density;
 	}
 
-	public abstract void interaction();
+	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
+	{
+		return grid;
+	}
 
 	public void printStats()
 	{

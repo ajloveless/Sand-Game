@@ -1,7 +1,7 @@
 import java.awt.Canvas; //Canvas to engine on
 import java.awt.Color; //Color definitions
 import java.awt.image.BufferStrategy; //Buffering object
-import java.awt.Graphics; //Engineing library
+import java.awt.Graphics; //Engine-ing library
 import java.lang.Runnable; //Create a runnable
 import java.lang.Thread; // import threads
 import javax.swing.JFrame; //Display a JFrame
@@ -49,7 +49,7 @@ public Elements.Spout spout = new Elements.Spout();
 public Elements.Water water = new Elements.Water();
 public Elements.Oil oil = new Elements.Oil();
 public Elements.Acid acid = new Elements.Acid();
-public Element[] elements = {air,sand,dirt,snow,seed,stone,wood,ice,plant,spout,water,oil,acid};//new Object[elementNumber];
+public Element[] elements = {air,sand,dirt,snow,seed,stone,wood,ice,plant,spout,water,oil,acid};//new Elements[elementNumber];
 
 public int scroll = 1; //Which element will be selected, starts at 1 so that air is never selected
 
@@ -120,7 +120,10 @@ public void update()
         int up = i - width;
         int down = i + width;
 
+        grid = elements[grid[i]].interaction(elements, grid, i, width);
 
+        changedCells[i] = true;
+        changedCells[down] = true;
 
         //Based on the type of element it is
         switch(elements[grid[i]].type)

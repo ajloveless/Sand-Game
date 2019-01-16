@@ -1,6 +1,6 @@
 package Elements;
 
-public class Sand extends Element
+public class Sand extends Powder
 {
 	public Sand()
 	{
@@ -11,8 +11,10 @@ public class Sand extends Element
 	}
 
 	@Override
-	public void interaction()
+	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
+		grid = super.interaction(elements, grid, i, width);
+		return grid;
 	}
 	
 }

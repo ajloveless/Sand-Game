@@ -1,6 +1,6 @@
 package Elements;
 
-public class Acid extends Element
+public class Acid extends Liquid
 {
 	public Acid()
 	{
@@ -11,9 +11,10 @@ public class Acid extends Element
 	}
 
 	@Override
-	public void interaction()
+	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
-
+		grid = super.interaction(elements, grid, i, width);
+		return grid;
 	}
 	
 }
