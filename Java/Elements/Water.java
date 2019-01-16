@@ -1,6 +1,6 @@
 package Elements;
 
-public class Water extends Element
+public class Water extends Liquid
 {
 	public Water()
 	{
@@ -11,8 +11,9 @@ public class Water extends Element
 	}
 
 	@Override
-	public void interaction()
+	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
+		return grid;
 	}
 	
 }

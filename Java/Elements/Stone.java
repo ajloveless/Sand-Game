@@ -1,6 +1,6 @@
 package Elements;
 
-public class Stone extends Element
+public class Stone extends Solid
 {
 	public Stone()
 	{
@@ -11,8 +11,9 @@ public class Stone extends Element
 	}
 
 	@Override
-	public void interaction()
+	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
+		return grid;
 	}
 	
 }

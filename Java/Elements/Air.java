@@ -1,6 +1,6 @@
 package Elements;
 
-public class Air extends Element
+public class Air extends Gas
 {
 	public Air()
 	{
@@ -11,8 +11,9 @@ public class Air extends Element
 	}
 
 	@Override
-	public void interaction()
+	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
+		return grid;
 	}
 	
 }
