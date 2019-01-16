@@ -123,7 +123,6 @@ public void update()
         grid = elements[grid[i]].interaction(elements, grid, i, width);
 
         changedCells[i] = true;
-        changedCells[down] = true;
 
         //Based on the type of element it is
         switch(elements[grid[i]].type)

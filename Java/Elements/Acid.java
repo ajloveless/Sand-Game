@@ -14,6 +14,16 @@ public class Acid extends Liquid
 	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
 		grid = super.interaction(elements, grid, i, width);
+		 for(int xx=-1;xx<=1;xx++)
+          for(int yy=-1;yy<=1;yy++)
+          {
+          	if (Math.random() > 0.90)
+            if (elements[grid[ i + (width*yy) + xx]].name != "Air" && elements[grid[ i + (width*yy) + xx]].name != "Acid")
+          {
+              grid[ i + (width*yy) + xx] = 0;
+              grid[i] = 0;
+          }
+         }
 		return grid;
 	}
 	

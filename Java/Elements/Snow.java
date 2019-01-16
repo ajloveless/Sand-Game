@@ -13,6 +13,10 @@ public class Snow extends Powder
 	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
 		grid = super.interaction(elements, grid, i, width);
+        for(int xx=-1;xx<=1;xx++)
+          for(int yy=-1;yy<=1;yy++)
+            if (elements[grid[ i + (width*yy) + xx]].name == "Water")
+                grid[i] = 7; //ice
 		return grid;
 	}
 	

@@ -14,7 +14,11 @@ public class Spout extends Solid
 	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
 		grid = super.interaction(elements, grid, i, width);
+      
+        if (elements[grid[i + width]].name == "Air")
+        if (Math.random() > 0.90)
+        grid[i + width] = 10; //water
+      
 		return grid;
 	}
-	
 }
