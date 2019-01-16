@@ -13,6 +13,7 @@ public class Spout extends Solid
 	@Override
 	public byte[] interaction(Element[] elements, byte[] grid, int i, int width)
 	{
+		grid = super.interaction(elements, grid, i, width);
 		return grid;
 	}
 	

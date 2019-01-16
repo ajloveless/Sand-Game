@@ -30,6 +30,7 @@ public class Powder extends Element
             grid[down + offset] = grid[i];
             grid[i] = swap;
         }
+
         return grid;
     }
 }
