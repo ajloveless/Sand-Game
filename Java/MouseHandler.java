@@ -62,10 +62,23 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     //When the mouse is pressed down
     public void mousePressed(MouseEvent event) 
     {  
-      //Run left click method in engine class
-       if(event.getButton() == MouseEvent.BUTTON1)
-   engine.leftClick(event.getX(), event.getY());
- }
+            int b1 = MouseEvent.BUTTON1_DOWN_MASK;
+    int b2 = MouseEvent.BUTTON2_DOWN_MASK;
+    int b3 = MouseEvent.BUTTON3_DOWN_MASK;
+
+
+        if ((event.getModifiersEx() & (b1 | b2 | b3)) == b1) 
+        {
+            engine.leftClick(event.getX(), event.getY());
+        } else if ((event.getModifiersEx() & (b1 | b2 | b3)) == b3) 
+        {
+            engine.rightClick(event.getX(), event.getY());
+        }
+        else if ((event.getModifiersEx() & (b1 | b2 | b3)) == b2) 
+        {
+            engine.middleClick(event.getX(), event.getY());
+        }
+    }
  //When the mouse is released
     public void mouseReleased(MouseEvent event) 
     {  
