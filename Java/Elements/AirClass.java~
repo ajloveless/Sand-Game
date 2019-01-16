@@ -13,8 +13,8 @@ public class Gas extends Element {
         int right = i + 1;
         int up = i - width;
         int down = i + width;
-        int offsetx = (int) Math.random() * 8 - 2;
-        int offsety = (int) Math.random() * 8 - 2;
+        int offsetx = (int) Math.random() * 3 - 2;
+        int offsety = (int) Math.random() * 3 - 2;
         
 
         if (i + offsetx + offsety*width > 0 && i + offsetx + offsety*width < grid.length)

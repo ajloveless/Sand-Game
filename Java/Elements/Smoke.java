@@ -1,11 +1,11 @@
 package Elements;
 
-public class Air extends AirClass
+public class Smoke extends Gas
 {
- public Air()
+ public Smoke()
  {
   //Id, Name, Tooltip, Type, Color, Density
-  super((byte)0,"Air","Does nothing",(byte)0,0x000000,0);
+  super((byte)13,"Smoke"," It's smokey",(byte)0,0xcccccc,-1);
 
 
  }

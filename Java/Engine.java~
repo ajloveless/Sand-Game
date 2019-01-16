@@ -33,7 +33,7 @@ int cursorSize;
 //Create a canvas to engine on
 private Canvas canvas = new Canvas(); 
 
-public int elementNumber = 14;
+public int elementNumber = 13;
 
 //In order of IDs
 public Elements.Air air = new Elements.Air(); 
@@ -49,8 +49,7 @@ public Elements.Spout spout = new Elements.Spout();
 public Elements.Water water = new Elements.Water();
 public Elements.Oil oil = new Elements.Oil();
 public Elements.Acid acid = new Elements.Acid();
-public Elements.Smoke smoke = new Elements.Smoke();
-public Element[] elements = {air,sand,dirt,snow,seed,stone,wood,ice,plant,spout,water,oil,acid,smoke};//new Elements[elementNumber];
+public Element[] elements = {air,sand,dirt,snow,seed,stone,wood,ice,plant,spout,water,oil,acid};//new Elements[elementNumber];
 
 public int scroll = 1; //Which element will be selected, starts at 1 so that air is never selected
 
@@ -116,9 +115,55 @@ public void update()
     if (i + width < grid.length - 1){
       //Only change a cell if it hasn't already been changed this frame, keeps chains of things from happening all at once
       if (!changedCells[i]) {
+        int left = i - 1;
+        int right = i + 1;
+        int up = i - width;
+        int down = i + width;
 
         grid = elements[grid[i]].interaction(elements, grid, i, width);
-        changedCells[i] = true;   
+
+        changedCells[i] = true;
+
+        //Based on the type of element it is
+        switch(elements[grid[i]].type)
+        {
+
+          case 0: //Air
+
+          break; 
+
+          case 1: //Solids
+
+          break; 
+
+          case 2: //Liquids
+            if (Math.random() > 0.50)
+            offset = -1;
+            else offset = 1;
+
+              
+              if (swap(i,down+offset) == false)
+              swap(i,down - offset);
+
+              if (swap(i,i+offset) == false)
+              swap(i,i-offset);
+          
+              
+          break;
+
+          case 3: //Powders
+            if (Math.random() > 0.80)
+            {
+            if (Math.random() > 0.50)
+            offset = -1;
+            else offset = 1;
+          } else offset = 0;
+
+              swap(i,down+offset);
+
+          break;
+
+        }
       }
     }
   }
@@ -183,6 +228,9 @@ public void rightClick(int x, int y)
  {
   //Get and store the buffer strategy
   BufferStrategy bufferStrategy = canvas.getBufferStrategy();
+  //Variable delcarations
+  int i = 0;
+  int x = 0;
 
   //Store the current time as a variable
   long lastTime = System.nanoTime();
@@ -219,7 +267,7 @@ public void rightClick(int x, int y)
   for(int w=xx;w<xx +size;w++)
    for (int h=yy;h<yy+size;h++)
    { 
-    if(((w-o) + (h-o) * width) < grid.length && ((w-o) + (h-o) * width) > 0)
+    if(((w-o) + (h-o) * width) < grid.length)
     if (elements[e] == air || elements[grid[((w-o) + (h-o) * width)]] == air)
     grid[((w-o) + (h-o) * width)] = e;
    }
