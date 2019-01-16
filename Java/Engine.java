@@ -91,12 +91,6 @@ public Engine()
  canvas.addMouseListener(mouse); //Listen for mouse button input
  canvas.addMouseMotionListener(mouse); //Mouse movement
  canvas.addMouseWheelListener(mouse); //Mouse wheel
-
-for(int i=0; i<elementNumber;i++)
-{
-  System.out.println(elements[i].name + ": " + elements[i].tooltip);
-}
-
  Arrays.fill(grid, air.id); //Start the game empty
 }
 
@@ -113,34 +107,50 @@ public void update()
    this.runTime += 1;
   }
 
-  
+  Arrays.fill(changedCells, false);
   for (int i = grid.length - 1; i>0; i--)
   {
     //Make sure the cell wont fall off screen and create an out of bounds error
     if (i + width < grid.length - 1){
       //Only change a cell if it hasn't already been changed this frame, keeps chains of things from happening all at once
       if (!changedCells[i]) {
-        int left = i - i;
-        int right = i + i;
-        int up = 
+        int left = i - 1;
+        int right = i + 1;
+        int up = i - width;
+        int down = i + width;
+
+
+
         //Based on the type of element it is
         switch(elements[grid[i]].type)
         {
 
-          case 0:
+          case 0: //Air
 
           break; 
 
-          case 1: 
+          case 1: //Solids
 
           break; 
 
-          case 2:
+          case 2: //Liquids
 
           break;
 
-          case 3: 
+          case 3: //Powders
+            if (Math.random() > 0.50)
+            if (Math.random() > 0.50)
+            offset = -1;
+            else offset = 1;
 
+            if(elements[grid[i]].density > elements[grid[down + offset]].density)
+            {
+              byte swap = grid[down + offset];
+              grid[down + offset] = grid[i];
+              grid[i] = swap;
+              changedCells[i] = true;
+              changedCells[down] = true;
+            }
           break;
 
         }
@@ -166,8 +176,8 @@ public void render()
    graphics.setColor(textColor);
    graphics.drawString(gui.updateGUI(),0,10);
   }
-  // for (int i=0; i < grid.length; i++)
-  // renderer.setPixel(grid[i].color, i % width, (i -(i % width))/width);
+  for (int i=0; i < grid.length; i++)
+  renderer.setPixel(elements[grid[i]].color, i % width, (i -(i % width))/width);
   //Show the buffers
   bufferStrategy.show();
 }
@@ -175,17 +185,14 @@ public void render()
 //When left click is pressed
 public void leftClick(int x, int y)
  {
-  //Spawn currently selected element at mouse
-  //particle(elements[scroll],cursorSize,x,y);
+  particle((byte) scroll,cursorSize,x,y);
   
  }
 
 //When right click is pressed
 public void rightClick(int x, int y)
  {
-  //Destroy element at mouse
-  //particle(air,cursorSize,x,y);
-  
+  particle((byte)0,cursorSize,x,y);
  }
 
  public void middleClick(int x, int y)
@@ -231,15 +238,15 @@ public void rightClick(int x, int y)
  }
  
  //Spawn particles in a square around the xx and yy position
- public void particle(Element e, int size, int xx, int yy)
+ public void particle(byte e, int size, int xx, int yy)
  {
-  // int o = size/2;
-  // for(int w=xx;w<xx +size;w++)
-  //  for (int h=yy;h<yy+size;h++)
-  //  { 
-  //   if (e == air || grid[((w-o) + (h-o) * width)] == air)
-  //   grid[((w-o) + (h-o) * width)] = e;
-  //  }
+  int o = size/2;
+  for(int w=xx;w<xx +size;w++)
+   for (int h=yy;h<yy+size;h++)
+   { 
+    if (elements[e] == air || elements[grid[((w-o) + (h-o) * width)]] == air)
+    grid[((w-o) + (h-o) * width)] = e;
+   }
  }
 
  //Executed once per key press, doesn't do anything for when keys are held down
