@@ -14,5 +14,8 @@ Physics simulation between various elements
   * Clean up code
   * Make a GUI
   * Make the controls better
-  * Add gasses
+  * ~~Add gasses~~
   * Add more elements
+  * Fix clicking and holding
+  * Fix water physics
+  * Fix teleporting gasses
