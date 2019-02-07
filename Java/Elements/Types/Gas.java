@@ -1,4 +1,6 @@
-package Elements;
+package Elements.Types;
+
+import Elements.Element;
 
 public class Gas extends Element {
 

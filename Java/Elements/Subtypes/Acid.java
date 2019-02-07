@@ -1,4 +1,7 @@
-package Elements;
+package Elements.Subtypes;
+
+import Elements.Element;
+import Elements.Liquid;
 
 public class Acid extends Liquid
 {

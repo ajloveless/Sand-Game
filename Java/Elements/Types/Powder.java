@@ -1,4 +1,6 @@
-package Elements;
+package Elements.Types;
+
+import Elements.Element;
 
 public class Powder extends Element
 {
@@ -17,12 +19,7 @@ public class Powder extends Element
         int right = i + 1;
         int up = i - width;
         int down = i + width;
-        int offset = 0;
-
-        if (Math.random() > 0.50) {
-            if (Math.random() > 0.50) offset = -1;
-            else offset = 1;
-        }
+        int offset = (int) (Math.random()*3) - 1;
 
         if(elements[grid[i]].density > elements[grid[down + offset]].density)
         {

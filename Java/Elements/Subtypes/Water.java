@@ -1,11 +1,14 @@
-package Elements;
+package Elements.Subtypes;
 
-public class Wood extends Solid
+import Elements.Element;
+import Elements.Liquid;
+
+public class Water extends Liquid
 {
-	public Wood()
+	public Water()
 	{
 		//Id, Name, Tooltip, Type, Color, Density
-		super((byte)6,"Wood","Blocks objects",(byte)1,0x855e42,2);
+		super((byte)10,"Water","Makes nice lakes",(byte)2,0x0000ff,0.5);
 
 
 	}

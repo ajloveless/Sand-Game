@@ -1,11 +1,14 @@
-package Elements;
+package Elements.Subtypes;
 
-public class Stone extends Solid
+import Elements.Element;
+import Elements.Types.Powder;
+
+public class Sand extends Powder
 {
-	public Stone()
+	public Sand()
 	{
 		//Id, Name, Tooltip, Type, Color, Density
-		super((byte)5,"Stone","Good at blocking things",(byte)1,0x808080,2);
+		super((byte)1,"Sand","Piles up in nice dunes",(byte)3,0xC2B280,1);
 
 
 	}

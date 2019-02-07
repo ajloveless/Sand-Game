@@ -1,11 +1,14 @@
-package Elements;
+package Elements.Subtypes;
 
-public class Sand extends Powder
+import Elements.Element;
+import Elements.Types.Gas;
+
+public class Air extends Gas
 {
-	public Sand()
+	public Air()
 	{
 		//Id, Name, Tooltip, Type, Color, Density
-		super((byte)1,"Sand","Piles up in nice dunes",(byte)3,0xC2B280,1);
+		super((byte)0,"Air","Does nothing",(byte)0,0x000000,0);
 
 
 	}

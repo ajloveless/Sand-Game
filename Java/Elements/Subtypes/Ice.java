@@ -1,4 +1,7 @@
-package Elements;
+package Elements.Subtypes;
+
+import Elements.Element;
+import Elements.Types.Solid;
 
 public class Ice extends Solid
 {

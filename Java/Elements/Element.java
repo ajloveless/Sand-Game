@@ -1,5 +1,7 @@
 package Elements;
 
+import java.util.Random;
+
 public class Element
 {
 	public final byte id;
@@ -8,6 +10,8 @@ public class Element
 	public final byte type;
 	public final int color;
 	public final double density;
+	public Random random = new Random();
+
 	/*
 	Types
 	-----
@@ -41,10 +45,4 @@ public class Element
 		System.out.println(density);
 	}
 
-	public void update()
-	{
-		
-	}
-
-	
 }

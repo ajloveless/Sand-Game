@@ -5,9 +5,9 @@ import java.awt.Graphics; //Engine-ing library
 import java.lang.Runnable; //Create a runnable
 import java.lang.Thread; // import threads
 import javax.swing.JFrame; //Display a JFrame
-import java.awt.event.MouseEvent;
-import java.util.Arrays; 
+import java.util.Arrays;
 import Elements.*;
+import Elements.Subtypes.*;
 
 //The Engine class needs to have JFrame methods and the Runnable run() method
 public class Engine extends JFrame implements Runnable
@@ -36,19 +36,19 @@ private Canvas canvas = new Canvas();
 public int elementNumber = 13;
 
 //In order of IDs
-public Elements.Air air = new Elements.Air(); 
-public Elements.Sand sand = new Elements.Sand(); 
-public Elements.Dirt dirt = new Elements.Dirt(); 
-public Elements.Snow snow = new Elements.Snow(); 
-public Elements.Seed seed = new Elements.Seed();
-public Elements.Stone stone = new Elements.Stone();
-public Elements.Wood wood= new Elements.Wood();
-public Elements.Ice ice = new Elements.Ice();
-public Elements.Plant plant = new Elements.Plant();
-public Elements.Spout spout = new Elements.Spout();
-public Elements.Water water = new Elements.Water();
-public Elements.Oil oil = new Elements.Oil();
-public Elements.Acid acid = new Elements.Acid();
+public Air air = new Air();
+public Sand sand = new Sand();
+public Dirt dirt = new Dirt();
+public Snow snow = new Snow();
+public Seed seed = new Seed();
+public Stone stone = new Stone();
+public Wood wood= new Wood();
+public Ice ice = new Ice();
+public Plant plant = new Plant();
+public Spout spout = new Spout();
+public Water water = new Water();
+public Oil oil = new Oil();
+public Acid acid = new Acid();
 public Element[] elements = {air,sand,dirt,snow,seed,stone,wood,ice,plant,spout,water,oil,acid};//new Elements[elementNumber];
 
 public int scroll = 1; //Which element will be selected, starts at 1 so that air is never selected
@@ -85,7 +85,7 @@ public Engine()
  canvas.createBufferStrategy(2);
  //Initialize the render handler at the size of the window
  renderer = new RenderHandler(getWidth(),getHeight());
- //Add listeners to recieve input
+ //Add listeners to receive input
  canvas.addKeyListener(keyboard); //Keyboard input
  canvas.addFocusListener(keyboard); //Check if window is in focus
  canvas.addMouseListener(mouse); //Listen for mouse button input
@@ -120,50 +120,10 @@ public void update()
         int up = i - width;
         int down = i + width;
 
+        //Calls the selected grid Element interaction method
         grid = elements[grid[i]].interaction(elements, grid, i, width);
 
         changedCells[i] = true;
-
-        //Based on the type of element it is
-        switch(elements[grid[i]].type)
-        {
-
-          case 0: //Air
-
-          break; 
-
-          case 1: //Solids
-
-          break; 
-
-          case 2: //Liquids
-            if (Math.random() > 0.50)
-            offset = -1;
-            else offset = 1;
-
-              
-              if (swap(i,down+offset) == false)
-              swap(i,down - offset);
-
-              if (swap(i,i+offset) == false)
-              swap(i,i-offset);
-          
-              
-          break;
-
-          case 3: //Powders
-            if (Math.random() > 0.80)
-            {
-            if (Math.random() > 0.50)
-            offset = -1;
-            else offset = 1;
-          } else offset = 0;
-
-              swap(i,down+offset);
-
-          break;
-
-        }
       }
     }
   }
@@ -228,7 +188,7 @@ public void rightClick(int x, int y)
  {
   //Get and store the buffer strategy
   BufferStrategy bufferStrategy = canvas.getBufferStrategy();
-  //Variable delcarations
+  //Variable declarations
   int i = 0;
   int x = 0;
 
@@ -236,7 +196,7 @@ public void rightClick(int x, int y)
   long lastTime = System.nanoTime();
   //One second converted to nanoseconds divided across desired this.fps
   double nanoSecondConversion = 1000000000.0 / this.fps;
-  //Clear deltaTime, which adjusts discrepency between engine logic speed and this.fps 
+  //Clear deltaTime, which adjusts discrepancy between engine logic speed and this.fps
   double deltaTime = 0;
   //Infinite loop the following for accurate-ish engine logic speed
   while(true)

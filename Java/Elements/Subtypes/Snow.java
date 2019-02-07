@@ -1,4 +1,7 @@
-package Elements;
+package Elements.Subtypes;
+
+import Elements.Element;
+import Elements.Types.Powder;
 
 public class Snow extends Powder
 {

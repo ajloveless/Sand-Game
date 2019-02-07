@@ -1,11 +1,14 @@
-package Elements;
+package Elements.Subtypes;
 
-public class Air extends Gas
+import Elements.Element;
+import Elements.Types.Solid;
+
+public class Wood extends Solid
 {
-	public Air()
+	public Wood()
 	{
 		//Id, Name, Tooltip, Type, Color, Density
-		super((byte)0,"Air","Does nothing",(byte)0,0x000000,0);
+		super((byte)6,"Wood","Blocks objects",(byte)1,0x855e42,2);
 
 
 	}

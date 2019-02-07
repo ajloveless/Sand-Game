@@ -1,11 +1,14 @@
-package Elements;
+package Elements.Subtypes;
 
-public class Oil extends Liquid
+import Elements.Element;
+import Elements.Types.Powder;
+
+public class Dirt extends Powder
 {
-	public Oil()
+	public Dirt()
 	{
 		//Id, Name, Tooltip, Type, Color, Density
-		super((byte)11,"Oil","Floats on top of water",(byte)2,0x2c2416,0.4);
+		super((byte)2,"Dirt","Makes good mountains",(byte)3,0x8B4513,1);
 
 
 	}
