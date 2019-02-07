@@ -1,7 +1,7 @@
 package Elements.Subtypes;
 
 import Elements.Element;
-import Elements.Liquid;
+import Elements.Types.Liquid;
 
 public class Water extends Liquid
 {

@@ -1,7 +1,7 @@
 package Elements.Subtypes;
 
+import Elements.Types.AirClass;
 import Elements.Element;
-import Elements.Types.Gas;
 
 public class Air extends AirClass
 {
