@@ -1,4 +1,4 @@
-package Elements;
+package Elements.Types;
 
 import Elements.Element;
 
