@@ -19,10 +19,6 @@ public class Liquid extends Element
             int down = i + width;
             int offset = (int) (Math.random()*3) - 1;
 
-            if (Math.random() > 0.50)
-            offset = -1;
-            else offset = 1;
-
             if(elements[grid[i]].density > elements[grid[down + offset]].density)
             {
             byte swap = grid[down + offset];
