@@ -30,18 +30,23 @@ public class Liquid extends Element
             grid[down - offset] = grid[i];
             grid[i] = swap;
             }
-
-            if(elements[grid[i]].density > elements[grid[i + offset]].density)
-            {
-            byte swap = grid[i + offset];
-            grid[i + offset] = grid[i];
-            grid[i] = swap;
-            } else if(elements[grid[i]].density > elements[grid[i - offset]].density)
-            {
-            byte swap = grid[i - offset];
-            grid[i - offset] = grid[i];
-            grid[i] = swap;
+            else if (elements[grid[i]].density > elements[grid[left]].density && elements[grid[i]].density > elements[grid[right]].density) {
+                byte swap = grid[i + offset];
+                grid[i + offset] = grid[i];
+                grid[i] = swap;
             }
+            else if (elements[grid[i]].density > elements[grid[left]].density) {
+                        byte swap = grid[left];
+                        grid[left] = grid[i];
+                        grid[i] = swap;
+                    }
+            else if (elements[grid[i]].density > elements[grid[right]].density) {
+                        byte swap = grid[right];
+                        grid[right] = grid[i];
+                        grid[i] = swap;
+
+                    }
+
         return grid;
     }
 }
