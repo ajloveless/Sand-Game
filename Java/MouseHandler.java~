@@ -87,6 +87,7 @@ public class MouseHandler implements MouseListener, MouseMotionListener, MouseWh
     
     public void mouseWheelMoved(MouseWheelEvent event)
     {
+        String message;
         int notches = event.getWheelRotation();
         engine.scroll -= notches;
         //Keep in bounds
