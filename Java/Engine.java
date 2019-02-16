@@ -15,24 +15,24 @@ public class Engine extends JFrame implements Runnable {
     int realtime;
     int paused;
     int fps;
-
     public static int width = 800; //Width of the window
     public static int height = 800; //Height of the window
     public static int alpha = 0xFFFF00DC; //Defined alpha color
     public static Color textColor = new Color(0xffffff); //Color of debug text
-
     public byte[] grid = new byte[width * height]; //Array for each screen pixel
-
     private boolean[] changedCells = new boolean[width * height]; //Array for each pixel for whether or not it was changed on the current frame
 
     public int frames = 0; //How many frames have been rendered
     private int offset = 0; //Cell offset for left or right, see update()
+    int speed = 2; //The speed of liquids (2 cells are checked in each direction instead of just 1)
 
     int runTime; //Defined in engine constructor
     boolean debug;
     int cursorSize;
+    //Create a canvas to engine on
+    private Canvas canvas = new Canvas();
 
-    private Canvas canvas = new Canvas();//Create a canvas to engine on
+    public int elementNumber = 14;
 
     //In order of IDs
     public Air air = new Air();
@@ -48,7 +48,7 @@ public class Engine extends JFrame implements Runnable {
     public Water water = new Water();
     public Oil oil = new Oil();
     public Acid acid = new Acid();
-    public Element[] elements = {air, sand, dirt, snow, seed, stone, wood, ice, plant, spout, water, oil, acid};
+    public Element[] elements = {air, sand, dirt, snow, seed, stone, wood, ice, plant, spout, water, oil, acid};//new Elements[elementNumber];
 
     public int scroll = 1; //Which element will be selected, starts at 1 so that air is never selected
 
@@ -127,6 +127,17 @@ public class Engine extends JFrame implements Runnable {
         }
     }
 
+
+    public boolean swap(int cell1, int cell2) {
+        if (elements[grid[cell1]].density > elements[grid[cell2]].density) {
+            byte swap = grid[cell2];
+            grid[cell2] = grid[cell1];
+            grid[cell1] = swap;
+            changedCells[cell1] = true;
+            changedCells[cell2] = true;
+            return true;
+        } else return false;
+    }
 
     //Render visuals
     public void render() {
